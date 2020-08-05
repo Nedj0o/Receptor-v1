@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+    <script>
+        function follow() {
+            if (confirm("Are you sure you want to follow this user?")) {
+                document.getElementById("followBtn").click();
+            }
+        }
+
+        function unfollow() {
+            if (confirm("Are you sure you want to stop following this user?")) {
+                document.getElementById("unfollowBtn").click();
+            }
+        }
+
+        function followers() {
+            document.getElementById("followersBtn").click();
+
+        }
+    </script>
+</head>
+<body>
+<main>
+    <header>
+        <nav class="navbar bg-info navbar-expand-lg navbar-background bg-info ">
+            <th:block th:include="~{/fragments/nav}"></th:block>
+        </nav>
+    </header>
+
+    <div class="container bg-blur rounded mt-5 " th:object="${user}">
+        <h3 th:text="*{role.getRoleName().name()}"></h3>
+        <p th:text="|Username : *{username}|"></p>
+        <p th:text="|Email    : *{email}|"></p>
+
+        <div th:if="${!isOwner}">
+            <button th:if="${!unfollow}" class="button" onclick="follow()"
+                    style="margin-left: 15px;margin-bottom: 15px;display: inline;">Follow
+            </button>
+            <button th:if="${unfollow}" class="button" onclick="unfollow()"
+                    style="margin-left: 15px;margin-bottom: 15px;display: inline;">Stop following
+            </button>
+        </div>
+        <button th:if="${hasFollowers}" class="button" onclick="followers()"
+                style="margin-left: 15px;margin-bottom: 15px;display: inline;">Followers
+        </button>
+
+        <hidden><a id="followersBtn" style="display: none;" th:href="@{/users/followers/{id}(id = *{id})}">Follow</a></hidden>
+        <hidden><a id="followBtn" style="display: none;" th:href="@{/users/follow/{id}(id = *{id})}">Follow</a></hidden>
+        <hidden><a id="unfollowBtn" style="display: none;" th:href="@{/users/unfollow/{id}(id = *{id})}">unfollow</a></hidden>
+
+        <div class="recipeBoxClass" th:each="recipe : *{recipes}" >
+
+            <b><h4 style="padding-top: 5px;" th:text="${recipe.getName()}"></h4></b>
+            <hr style="width: 30%;margin-top: -5px;">
+            <p class="recipeCategory" th:text="${recipe.getDescription()}"></p>
+
+            <a th:if="${isOwner}" id="delBtn" th:href="@{/recipes/delete/{id}(id = ${recipe.id})}">
+                <button  class="button" style="margin-left: 330px;margin-bottom: 15px; ">
+                    Delete
+                </button>
+            </a>
+        </div>
+    </div>
+</main>
+<footer class="footer bg-info py-2">
+    <th:block th:include="~{/fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

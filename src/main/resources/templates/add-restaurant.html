@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <th:block th:include="~{/fragments/nav}"></th:block>
+    </nav>
+</header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill bg-dark badge-dark">Add Restaurant</span></h1>
+    <hr class="hr-3"/>
+    <form class="mx-auto w-25 bg-dark p-3 rounded text-center"
+          th:object="${restaurantAddBindingModel}" th:action="@{/restaurants/add}" method="POST">
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="name" class="h4 mb-2">Name</label>
+            </div>
+            <input th:field="*{name}" th:errorclass="bg-danger" type="text" class="form-control" id="name" name="name" />
+            <small th:each="e : ${#fields.errors('name')}" th:text="${e}" class="text-danger">Incorrect name!</small>
+        </div>
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="address" class="h4 mb-2">Address</label>
+            </div>
+            <input th:field="*{address}" th:errorclass="bg-danger" type="text" class="form-control" id="address" name="description"/>
+            <small th:each="e : ${#fields.errors('address')}" th:text="${e}" class="text-danger">Incorrect description</small>
+        </div>
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="category" class="h4 mb-2">Category</label>
+            </div>
+            <select class="browser-default custom-select" id="category" name="category">
+                <option value="">Select category</option>
+                <option value="Coffee-House">Coffee-House</option>
+                <option value="Fast-Food">Fast-Food</option>
+                <option value="Family-Restaurant">Family-Restaurant</option>
+                <option value="Ethic-Restaurant">Ethic-Restaurant</option>
+                <option value="Steak-House">Steak-House</option>
+                <option value="Pizzeria">Pizzeria</option>
+            </select>
+            <small th:each="e : ${#fields.errors('category')}" th:text="${e}" class="text-danger">Incorrect category</small>
+        </div>
+
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-secondary text-white mb-3">Add Restaurant</button>
+        </div>
+    </form>
+</main>
+<footer class="footer bg-info  py-2">
+    <th:block th:include="~{/fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

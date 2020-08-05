@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+</head>
+<body>
+<main>
+    <header>
+        <nav class="navbar bg-info navbar-expand-lg navbar-background bg-info ">
+            <th:block th:include="~{/fragments/nav}"></th:block>
+        </nav>
+    </header>
+
+    <div class="container bg-blur text-white rounded mt-5 " th:object="${user}">
+        <a style="display: inline; color: #5bc0de; font-size: 20px" th:href="@{/users/profile/(id = *{getId()})}"
+           th:text="|Username : *{username}|"></a>
+        <p>Followers:</p>
+
+    <div class="postBoxClass" th:each="f : ${followersById}" th:object="${f}">
+
+        <a style=" display: inline; color: white;"th:href="@{/users/profile/(id = *{getId()})}"
+           th:text="*{getUsername()}"></a>
+
+    </div>
+    </div>
+</main>
+<footer class="footer bg-info py-2">
+    <th:block th:include="~{/fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

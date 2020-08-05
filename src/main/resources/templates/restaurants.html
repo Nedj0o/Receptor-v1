@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <th:block th:include="~{/fragments/nav}"></th:block>
+    </nav>
+</header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Restaurants</span></h1>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark" th:text="|Total count of Restaurants: ${restaurants.size()}|"></span></h1>
+    <hr class="hr-3"/>
+    <div class="container-fluid">
+        <div class="offers row mx-auto d-flex flex-row justify-content-center">
+            <div  th:each="r : ${restaurants}" th:object="${r}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+                <a th:href="@{/restaurants/details/(id =*{id})}">
+                    <div class="card-img-top-wrapper">
+                        <img class="card-img-top" th:src="*{imgUrl}" alt="image">
+                    </div>
+                    <div class="card-body pb-1">
+                        <h5 class="card-title text-center" th:text="|Restaurant name - *{name}|"></h5>
+                    </div>
+                </a>
+            </div>
+            <div class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+                <a href="/restaurants/add">
+                    <div class="card-img-top-wrapper">
+                        <img class="card-img-top" src="/img/add.png" alt="image">
+                    </div>
+                    <div class="card-body pb-1">
+                        <h5 class="card-title text-center" >Add Restaurant</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer bg-info  py-2">
+    <th:block th:include="~{/fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

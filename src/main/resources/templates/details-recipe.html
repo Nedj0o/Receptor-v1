@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+</head>
+<body>
+<header >
+         <nav class="navbar navbar-expand-lg navbar-light bg-info">
+             <th:block th:include="~{/fragments/nav}"></th:block>
+		</nav>
+</header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Details</span></h1>
+    <hr class="my-3"/>
+    <div class="container-fluid bg-dark w-25 m-auto ">
+        <div class="row justify-content-center ">
+            <div th:object="${recipe}" class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="*{imgUrl}" alt="Card image cap">
+                <div class="card-body bg-gray align-content-center text-center">
+                    <h6 th:text="*{name}">Recipe name</h6>
+                    <p class="card-text" th:text="*{description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    <footer class="footer bg-info  py-2">
+        <th:block th:include="~{/fragments/footer}"></th:block>
+	</footer>
+</body>
+</html>
