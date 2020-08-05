@@ -66,8 +66,6 @@ public class HomeController {
     }
 
 
-    //github test
-
     @GetMapping("/restaurants")
     public ModelAndView restaurants(HttpSession httpSession, ModelAndView modelAndView){
 

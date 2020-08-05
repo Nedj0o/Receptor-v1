@@ -72,7 +72,6 @@ public class RecipesController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id")String id){
-        String check = id;
         Recipe recipe = this.recipeService.getById(id);
         this.userService.delete(this.modelMapper.map(recipe, RecipeServiceModel.class));
         this.recipeService.delete(id);
@@ -92,10 +91,6 @@ public class RecipesController {
         if(user2.getRole().getRoleName().toString().equals("ADMIN")){
             modelAndView.addObject("isADMIN",true);
         }
-
-        modelAndView.addObject("user", (User) httpSession.getAttribute("user"));
-        modelAndView.addObject("allRecipes", this.recipeService.getAll());
-        modelAndView.addObject("Liked",true);
         modelAndView.setViewName("/home");
         return modelAndView;
     }

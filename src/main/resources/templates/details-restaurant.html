@@ -18,9 +18,8 @@
                 <img class="card-img-top" th:src="*{imgUrl}" alt="Card image cap">
                 <div class="card-body bg-gray align-content-center text-center">
                     <h6 th:text="*{name}">Restaurant name</h6>
-                    <p class="card-text" th:text="*{address}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi enim, excepturi ha </p>
-                    <h6 th:text="*{imgUrl}">Category</h6>
-                    <a th:href="@{/restaurants/delete/{id}(id = *{id})}" class="btn btn-danger" >Delete</a>
+                    <p class="card-text" th:text="*{address}"></p>
+                    <a th:if="${isADMIN}" th:href="@{/restaurants/delete/{id}(id = *{id})}" class="btn btn-danger" >Delete</a>
                 </div>
             </div>
         </div>
