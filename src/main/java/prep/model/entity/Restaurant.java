@@ -2,6 +2,7 @@ package prep.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,6 +12,8 @@ public class Restaurant extends BaseEntity{
     private String name;
     private String address;
     private String category;
+    private int stars;
+    private User commiter;
 
     public Restaurant() {
 
@@ -40,5 +43,23 @@ public class Restaurant extends BaseEntity{
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Column
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    @ManyToOne
+    public User getCommiter() {
+        return commiter;
+    }
+
+    public void setCommiter(User commiter) {
+        this.commiter = commiter;
     }
 }

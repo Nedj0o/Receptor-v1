@@ -28,6 +28,7 @@ public class RecipeServiceImpl implements RecipeService {
         this.categoryService = categoryService;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
+
     }
 
     @Override
@@ -72,6 +73,30 @@ public class RecipeServiceImpl implements RecipeService {
                 .collect(Collectors.toList());
     }
 
+
+
+    @Override
+    public void delete(String id) {
+        this.recipeRepository
+                .deleteById(id);
+    }
+
+    @Override
+    public List<Recipe> getAll() {
+        List<Recipe> recipes = this.recipeRepository.findAll();
+        Collections.reverse(recipes);
+        //reverse so the most recent post is on the top
+        return recipes;
+    }
+
+    @Override
+    public Recipe getById(String id) {
+        return this.recipeRepository
+                .findById(id)
+                .map(p -> this.modelMapper.map(p, Recipe.class))
+                .orElse(null);
+    }
+
     @Override
     public RecipeViewModel findById(String id) {
         return this.recipeRepository
@@ -89,25 +114,36 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void delete(String id) {
-        this.recipeRepository
-                .deleteById(id);
-    }
+    public RecipeViewModel findMostLiked(String id) {
 
-    @Override
-    public List<Recipe> getAll() {
-        List<Recipe> posts = this.recipeRepository.findAll();
-        Collections.reverse(posts);
-        //reverse so the most recent post is on the top
-        return posts;
-    }
+        List<RecipeViewModel> recipee = this.recipeRepository.findAll()
+                .stream()
+                .map(recipe -> {
+                    RecipeViewModel recipeViewModel = this.modelMapper
+                            .map(recipe, RecipeViewModel.class);
 
-    @Override
-    public Recipe getById(String id) {
-        return this.recipeRepository
-                .findById(id)
-                .map(p -> this.modelMapper.map(p, Recipe.class))
-                .orElse(null);
+                    recipeViewModel.setImgUrl(String
+                            .format("/img/%s.jpg",
+                                    recipe.getCategory().getCategoryName().name()));
+
+                    return recipeViewModel;
+                })
+                .collect(Collectors.toList());
+
+        String mostLikesID="";
+        int mostlikes=0;
+
+         for (RecipeViewModel r : recipee) {
+             int like = r.getLikes();
+             String idd = r.getId();
+             if(like>mostlikes){
+                 mostlikes=like;
+                 mostLikesID=idd;
+             }
+         }
+
+
+        return findById(mostLikesID);
     }
 
     @Override
@@ -116,4 +152,5 @@ public class RecipeServiceImpl implements RecipeService {
         recipeLiked.setLikes(recipeLiked.getLikes() + 1);
         this.recipeRepository.saveAndFlush(recipeLiked);
     }
+
 }

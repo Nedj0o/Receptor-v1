@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import prep.model.binding.RestaurantAddBindingModel;
+import prep.model.entity.Restaurant;
 import prep.model.entity.User;
 import prep.model.service.RestaurantServiceModel;
 import prep.service.RestaurantService;
@@ -43,7 +44,8 @@ public class RestaurantController {
     public String addConfirm(@Valid @ModelAttribute("restaurantAddBindingModel")
                                          RestaurantAddBindingModel restaurantAddBindingModel,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes,
+                             HttpSession httpSession){
 
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("restaurantAddBindingModel",restaurantAddBindingModel);
@@ -53,7 +55,7 @@ public class RestaurantController {
         }
 
         this.restaurantService.addRestaurant(this.modelMapper
-                .map(restaurantAddBindingModel, RestaurantServiceModel.class));
+                .map(restaurantAddBindingModel, RestaurantServiceModel.class),httpSession.getAttribute("id").toString());
 
         return "redirect:/";
     }
@@ -75,6 +77,20 @@ public class RestaurantController {
     public String delete(@PathVariable("id")String id){
         this.restaurantService.delete(id);
         return "redirect:/";
+    }
+    @GetMapping("/rate")
+    public ModelAndView rate(@RequestParam(name = "id") String id, ModelAndView modelAndView, HttpSession httpSession,@RequestParam(name="stars") int stars) {
+        User user = (User) httpSession.getAttribute("user");
+        Restaurant restaurant = this.restaurantService.getById(id);
+        this.restaurantService.rate(user, restaurant, stars);
+
+        User u = (User) httpSession.getAttribute("user");
+        User user2 = this.userService.getById(u.getId());
+        if(user2.getRole().getRoleName().toString().equals("ADMIN")){
+            modelAndView.addObject("isADMIN",true);
+        }
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 
 }

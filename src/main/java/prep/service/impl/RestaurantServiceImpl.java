@@ -3,11 +3,14 @@ package prep.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import prep.model.entity.Restaurant;
+import prep.model.entity.User;
 import prep.model.service.RestaurantServiceModel;
 import prep.model.view.RestaurantViewModel;
 import prep.repository.RestaurantRepository;
+import prep.repository.UserRepository;
 import prep.service.RestaurantService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +18,12 @@ import java.util.stream.Collectors;
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
 
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, ModelMapper modelMapper) {
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, ModelMapper modelMapper, UserRepository userRepository) {
         this.restaurantRepository = restaurantRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
 
     public RestaurantServiceModel add(RestaurantServiceModel restaurantServiceModel){
@@ -32,11 +37,25 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void addRestaurant(RestaurantServiceModel restaurantServiceModel) {
-        Restaurant restaurant = this.modelMapper
-                .map(restaurantServiceModel,Restaurant.class);
+    public void addRestaurant(RestaurantServiceModel restaurantServiceModel,String id) {
 
-        this.restaurantRepository.saveAndFlush(restaurant);
+
+        Restaurant restaurant = this.modelMapper
+                .map(restaurantServiceModel, Restaurant.class);
+        User user = this.userRepository.findById(id).orElse(null);
+
+        restaurant.setCommiter(user);
+
+        if (user.getRecipes() == null) {
+            List<Restaurant> restaurants = new ArrayList<>();
+            restaurants.add(restaurant);
+            user.setRestaurants(restaurants);
+        } else {
+            user.getRestaurants().add(restaurant);
+        }
+
+
+        this.userRepository.save(user);
     }
 
     @Override
@@ -77,5 +96,20 @@ public class RestaurantServiceImpl implements RestaurantService {
     public void delete(String id) {
         this.restaurantRepository
                 .deleteById(id);
+    }
+
+    @Override
+    public void rate(User user, Restaurant restaurant, int rate) {
+        Restaurant restaurantRated = this.restaurantRepository.findById(restaurant.getId()).orElse(null);
+        restaurantRated.setStars(rate);
+        this.restaurantRepository.saveAndFlush(restaurantRated);
+    }
+
+    @Override
+    public Restaurant getById(String id) {
+        return this.restaurantRepository
+                .findById(id)
+                .map(p -> this.modelMapper.map(p, Restaurant.class))
+                .orElse(null);
     }
 }

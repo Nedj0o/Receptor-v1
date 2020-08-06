@@ -4,6 +4,8 @@ public class RestaurantServiceModel extends BaseServiceModel {
     private String name;
     private String address;
     private String category;
+    private int stars;
+    private UserServiceModel commiter;
 
     public String getName() {
         return name;
@@ -27,5 +29,21 @@ public class RestaurantServiceModel extends BaseServiceModel {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    public UserServiceModel getCommiter() {
+        return commiter;
+    }
+
+    public void setCommiter(UserServiceModel commiter) {
+        this.commiter = commiter;
     }
 }

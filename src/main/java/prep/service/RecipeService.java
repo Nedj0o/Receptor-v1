@@ -21,4 +21,6 @@ public interface RecipeService {
     Recipe getById(String id);
 
     void like(User user, Recipe recipe, int vote);
+
+    RecipeViewModel findMostLiked(String id);
 }

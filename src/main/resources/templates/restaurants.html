@@ -25,6 +25,20 @@
                         <h5 class="card-title text-center" th:text="|Restaurant name - *{name}|"></h5>
                     </div>
                 </a>
+
+                    <h5 th:text="|Stars: *{stars}|"></h5>
+                    <a th:if="*{stars == 0}" th:href="@{/restaurants/rate/(id = ${r.id}, stars = 1)}"  >Give 1 star</a>
+                    <a th:if="*{stars == 0}"  th:href="@{/restaurants/rate/(id = ${r.id}, stars = 2)}"  >Give 2 stars</a>
+                    <a th:if="*{stars == 0}"  th:href="@{/restaurants/rate/(id = ${r.id}, stars = 3)}"  >Give 3 stars</a>
+                    <a th:if="*{stars == 0}"  th:href="@{/restaurants/rate/(id = ${r.id}, stars = 4)}"  >Give 4 stars</a>
+                    <a th:if="*{stars == 0}"  th:href="@{/restaurants/rate/(id = ${r.id}, stars = 5)}"  >Give 5 stars</a>
+                <div>
+                    <img th:if="*{stars == 1}" class="card-img-top" style="margin-left: auto; margin-right: auto; width:50%;height: 50%; " src="/img/1-star.png" alt="image">
+                    <img th:if="*{stars == 2}" class="card-img-top" style="margin-left: auto; margin-right: auto; width:50%;height: 50%; "  src="/img/2-stars.png" alt="image">
+                    <img th:if="*{stars == 3}" class="card-img-top" style="margin-left: auto; margin-right: auto; width:50%;height: 50%; "  src="/img/3-stars.png" alt="image">
+                    <img th:if="*{stars == 4}" class="card-img-top" style="margin-left: auto; margin-right: auto; width:50%;height: 50%; "  src="/img/4-stars.png" alt="image">
+                    <img th:if="*{stars == 5}" class="card-img-top" style="margin-left: auto; margin-right: auto; width:50%;height: 50%; "  src="/img/5-stars.png" alt="image">
+                </div>
             </div>
             <div class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
                 <a href="/restaurants/add">

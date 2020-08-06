@@ -70,6 +70,13 @@ public class RecipesController {
         return modelAndView;
     }
 
+    @GetMapping("/most")
+    public ModelAndView mostliked(@RequestParam("id") String id, ModelAndView modelAndView){
+        modelAndView.addObject("recipe",this.recipeService.findMostLiked(id));
+        modelAndView.setViewName("most-liked-recipe");
+        return modelAndView;
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id")String id){
         Recipe recipe = this.recipeService.getById(id);
@@ -91,7 +98,7 @@ public class RecipesController {
         if(user2.getRole().getRoleName().toString().equals("ADMIN")){
             modelAndView.addObject("isADMIN",true);
         }
-        modelAndView.setViewName("/home");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 

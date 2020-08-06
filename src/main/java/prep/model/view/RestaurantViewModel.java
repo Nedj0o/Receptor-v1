@@ -6,6 +6,7 @@ public class RestaurantViewModel {
     private String name;
     private String address;
     private String imgUrl;
+    private int stars;
 
     public RestaurantViewModel() {
     }
@@ -40,5 +41,13 @@ public class RestaurantViewModel {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 }

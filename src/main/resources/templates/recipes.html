@@ -13,6 +13,8 @@
 <main>
     <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Recipes</span></h1>
     <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark" th:text="|Total count of Recipes: ${recipes.size()}|"></span></h1>
+    <h1 class="text-center mt-2" ><a th:href="@{/recipes/most/(id =*{id})}"><span class="badge badge-pill badge-dark" >The Most Liked Recipe</span></a></h1>
+
     <hr class="hr-3"/>
     <div class="container-fluid">
         <div class="offers row mx-auto d-flex flex-row justify-content-center">
