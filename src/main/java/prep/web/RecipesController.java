@@ -98,7 +98,7 @@ public class RecipesController {
         if(user2.getRole().getRoleName().toString().equals("ADMIN")){
             modelAndView.addObject("isADMIN",true);
         }
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/recipes");
         return modelAndView;
     }
 

@@ -51,7 +51,7 @@ public class RestaurantController {
             redirectAttributes.addFlashAttribute("restaurantAddBindingModel",restaurantAddBindingModel);
             redirectAttributes.addFlashAttribute
                     ("org.springframework.validation.BindingResult.restaurantAddBindingModel",bindingResult);
-            return "redirect:add";
+            return "redirect:/";
         }
 
         this.restaurantService.addRestaurant(this.modelMapper
@@ -76,6 +76,7 @@ public class RestaurantController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id")String id){
         this.restaurantService.delete(id);
+
         return "redirect:/";
     }
     @GetMapping("/rate")
@@ -89,7 +90,7 @@ public class RestaurantController {
         if(user2.getRole().getRoleName().toString().equals("ADMIN")){
             modelAndView.addObject("isADMIN",true);
         }
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/restaurants");
         return modelAndView;
     }
 

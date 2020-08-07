@@ -25,4 +25,5 @@ public interface UserService {
 
     List<User> searchUsersByAlikeNicknames(String searchString);
     void delete(RecipeServiceModel recipeServiceModel);
+
 }

@@ -13,7 +13,7 @@
 <main>
     <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Recipes</span></h1>
     <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark" th:text="|Total count of Recipes: ${recipes.size()}|"></span></h1>
-    <h1 class="text-center mt-2" ><a th:href="@{/recipes/most/(id =*{id})}"><span class="badge badge-pill badge-dark" >The Most Liked Recipe</span></a></h1>
+    <h1 class="text-center mt-2" ><a th:href="@{/recipes/most/(id =*{id})}"><span class="badge badge-pill badge-dark" >Most cooked recipe</span></a></h1>
 
     <hr class="hr-3"/>
     <div class="container-fluid">
@@ -28,11 +28,13 @@
                     </div>
                 </a>
                 <a>
-                    <button th:text="|Likes: ${r.likes}|" style="display: inline;position:center;right:10px;bottom:10px;"><i
+                    <button th:text="|This Recipe is cooked ${r.likes} times.|" style="display: inline;position:center;right:10px;bottom:10px;"><i
                             class="far fa-thumbs-up"></i></button>
                 </a>
+                <a>Click Here if you cooked it ---></a>
                 <a th:href="@{/recipes/voteUp/(id = ${r.id})}">
-                        <img src="/img/like.jpg" width="50" height="50" align="right" >
+
+                        <img src="/img/cook.png" width="50" height="50" align="right" >
                 </a>
             </div>
             <div class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">

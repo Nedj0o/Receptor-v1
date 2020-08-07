@@ -10,7 +10,6 @@ import prep.repository.RestaurantRepository;
 import prep.repository.UserRepository;
 import prep.service.RestaurantService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,23 +38,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void addRestaurant(RestaurantServiceModel restaurantServiceModel,String id) {
 
-
         Restaurant restaurant = this.modelMapper
-                .map(restaurantServiceModel, Restaurant.class);
-        User user = this.userRepository.findById(id).orElse(null);
+                .map(restaurantServiceModel,Restaurant.class);
 
-        restaurant.setCommiter(user);
-
-        if (user.getRecipes() == null) {
-            List<Restaurant> restaurants = new ArrayList<>();
-            restaurants.add(restaurant);
-            user.setRestaurants(restaurants);
-        } else {
-            user.getRestaurants().add(restaurant);
-        }
-
-
-        this.userRepository.save(user);
+        this.restaurantRepository.saveAndFlush(restaurant);
     }
 
     @Override

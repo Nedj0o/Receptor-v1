@@ -3,11 +3,9 @@ package prep.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import prep.model.binding.UserChangeRoleBindModel;
-import prep.model.entity.Recipe;
-import prep.model.entity.Role;
-import prep.model.entity.RoleName;
-import prep.model.entity.User;
+import prep.model.entity.*;
 import prep.model.service.RecipeServiceModel;
+import prep.model.service.RestaurantServiceModel;
 import prep.model.service.UserServiceModel;
 import prep.model.view.UserViewModel;
 import prep.repository.UserRepository;
@@ -114,4 +112,5 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.saveAndFlush(user);
     }
+
 }
