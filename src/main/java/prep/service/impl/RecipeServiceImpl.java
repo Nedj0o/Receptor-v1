@@ -147,6 +147,35 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public void cleanUpOldRecipe() {
+        List<RecipeViewModel> recipee = this.recipeRepository.findAll()
+                .stream()
+                .map(recipe -> {
+                    RecipeViewModel recipeViewModel = this.modelMapper
+                            .map(recipe, RecipeViewModel.class);
+
+                    recipeViewModel.setImgUrl(String
+                            .format("/img/%s.jpg",
+                                    recipe.getCategory().getCategoryName().name()));
+
+                    return recipeViewModel;
+                })
+                .collect(Collectors.toList());
+
+        String todeleteLikesID="";
+
+        for (RecipeViewModel r : recipee) {
+            int like = r.getLikes();
+            String idd = r.getId();
+            if(like>50){
+                todeleteLikesID=idd;
+                this.recipeRepository.deleteById(idd);
+            }
+
+        }
+    }
+
+    @Override
     public void like(User user, Recipe recipe, int vote) {
         Recipe recipeLiked = this.recipeRepository.findById(recipe.getId()).orElse(null);
         recipeLiked.setLikes(recipeLiked.getLikes() + 1);

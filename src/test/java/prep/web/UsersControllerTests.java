@@ -38,8 +38,9 @@ public class UsersControllerTests {
         user.setPassword(USER_PASSWORD);
         user.setEmail(USER_EMAIL);
         user.setRole(USER_ROLE);
-        user = this.mockedUserRepository.saveAndFlush(user);
         USER_ID = user.getId();
+        user = this.mockedUserRepository.saveAndFlush(user);
+
     }
 
     @AfterEach

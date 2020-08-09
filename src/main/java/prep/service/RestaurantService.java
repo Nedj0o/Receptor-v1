@@ -19,4 +19,6 @@ public interface RestaurantService {
     void rate(User user, Restaurant restaurant, int rate);
 
     Restaurant getById(String id);
+
+    RestaurantServiceModel findByName(String name);
 }

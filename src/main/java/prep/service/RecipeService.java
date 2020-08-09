@@ -23,4 +23,6 @@ public interface RecipeService {
     void like(User user, Recipe recipe, int vote);
 
     RecipeViewModel findMostLiked(String id);
+
+    void cleanUpOldRecipe();
 }

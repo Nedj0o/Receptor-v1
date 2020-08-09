@@ -98,4 +98,11 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .map(p -> this.modelMapper.map(p, Restaurant.class))
                 .orElse(null);
     }
+
+    @Override
+    public RestaurantServiceModel findByName(String name) {
+        return this.restaurantRepository.findByName(name)
+                .map(restaurant -> this.modelMapper.map(restaurant, RestaurantServiceModel.class))
+                .orElse(null);
+    }
 }
